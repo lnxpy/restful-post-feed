@@ -27,6 +27,7 @@ runs:
            pip install -r requirements.txt
     
     - name: Success Message
+      shell: bash
       run: echo "Everythong looks nice" |
            python --version |
            pip freeze |
