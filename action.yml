@@ -2,23 +2,35 @@ name: 'RESTful Post Feed'
 author: 'Sadra Yahyapour'
 description: 'Allows you to show your latest posts from a REST API endpoint on your profile/project readme'
 
-#inputs:
-#  endpoint:
-#    description: 'RESTful endpoint that responses JSON'
-#    required: true
-#  title:
-#    description: 'Post title field name from the response'
-#    default: 'title'
-#  url:
-#    description: 'Post URL'
-#    required: true
+inputs:
+  endpoint:
+    description: 'RESTful endpoint that responses JSON'
+    required: true
+  title:
+    description: 'Post title field name from the response'
+    default: 'title'
+  url:
+    description: 'Post URL'
+    required: true
 
 runs:
   using: "composite"
   steps:
-    - run: echo "Hello".
+    - name: Set up Python 3.10
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.10'
+    
+    - name: Install Dependencies
       shell: bash
-    - run: echo "${{ github.action_path }}" >> $GITHUB_PATH
+      run: echo "${{ github.action_path }}" >> $GITHUB_PATH |
+           python -m pip install --upgrade pip |
+           pip install -r utils/requirements.txt
+    
+    - name: Success Message
       shell: bash
-    - run: helloworld.sh
-      shell: bash
+      run: echo "Everythong looks nice" |
+           python --version |
+           python utils/updater.py |
+           pip freeze |
+           ./helloworld.sh
