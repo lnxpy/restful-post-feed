@@ -16,21 +16,10 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - name: Set up Python 3.10
-      uses: actions/setup-python@v2
+    - uses: actions/setup-python@v2
       with:
         python-version: '3.10'
-    
-    - name: Install Dependencies
+    - run: echo "${{ github.action_path }}" >> $GITHUB_PATH
       shell: bash
-      run: echo "${{ github.action_path }}" >> $GITHUB_PATH |
-           python -m pip install --upgrade pip |
-           pip install -r utils/requirements.txt
-    
-    - name: Success Message
+    - run: helloworld.sh
       shell: bash
-      run: echo "Everythong looks nice" |
-           python --version |
-           python utils/updater.py |
-           pip freeze |
-           ./helloworld.sh
