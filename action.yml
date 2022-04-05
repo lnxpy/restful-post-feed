@@ -23,4 +23,4 @@ runs:
     
     - name: Success Message
       shell: bash
-      run: helloworld.sh
+      run: ./helloworld.sh
