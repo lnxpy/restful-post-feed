@@ -1,6 +1,7 @@
 name: 'RESTful Post Feed'
 author: 'Sadra Yahyapour'
 description: 'Allows you to show your latest posts from a REST API endpoint on your profile/project readme'
+
 inputs:
   endpoint:
     description: 'RESTful endpoint that responses JSON'
@@ -11,10 +12,7 @@ inputs:
   url:
     description: 'Post URL'
     required: true
-outputs:
-  random-number:
-    description: "Random number"
-    value: ${{ steps.random-number-generator.outputs.random-id }}
+
 runs:
   using: "composite"
   steps:
