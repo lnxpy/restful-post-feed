@@ -19,15 +19,16 @@ runs:
     - uses: actions/setup-python@v2
       with:
         python-version: '3.10'
-
-    - name: Defining the action path
-      run: echo "${{ github.action_path }}" >> $GITHUB_PATH && cd $GITHUB_PATH
-      shell: bash
     
     - name: Install dependencies
-      run: pip install -r utils/requirements.txt
+      run: python -m pip install --upgrade pip |
+           pip install -r ${{ github.action_path }}/utils/requirements.txt
       shell: bash
 
     - name: Running Python script
-      run: python utils/updater.py
+      run: python ${{ github.action_path }}/utils/updater.py
       shell: bash
+      env:
+        ENDPOINT: ${{ inputs.endpoint }}
+        TITLE: ${{ inputs.title }}
+        URL: ${{ inputs.url }}
