@@ -31,7 +31,7 @@ runs:
     - name: Running the bash script
       run: $GITHUB_PATH/helloworld.sh
       shell: bash
-    
+
     - name: Running Python script
       run: python $GITHUB_PATH/utils/updater.py
       shell: bash
