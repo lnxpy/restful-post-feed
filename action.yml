@@ -2,16 +2,16 @@ name: 'RESTful Post Feed'
 author: 'Sadra Yahyapour'
 description: 'Allows you to show your latest posts from a REST API endpoint on your profile/project readme'
 
-#inputs:
-#  endpoint:
-#    description: 'RESTful endpoint that responses JSON'
-#    required: true
-#  title:
-#    description: 'Post title field name from the response'
-#    default: 'title'
-#  url:
-#    description: 'Post URL'
-#    required: true
+inputs:
+  endpoint:
+    description: 'RESTful endpoint that responses JSON'
+    required: true
+  title:
+    description: 'Post title field name from the response'
+    default: 'title'
+  url:
+    description: 'Post URL'
+    required: true
 
 runs:
   using: "composite"
@@ -21,17 +21,15 @@ runs:
         python-version: '3.10'
 
     - name: Defining the action path
-      run: echo "${{ github.action_path }}" >> $GITHUB_PATH
+      run: \
+      echo "${{ github.action_path }}" >> $GITHUB_PATH
+      cd $GITHUB_PATH
       shell: bash
     
     - name: Install dependencies
-      run: pip install -r ${{ github.action_path }}/utils/requirements.txt
-      shell: bash
-
-    - name: Running the bash script
-      run: ${{ github.action_path }}/helloworld.sh
+      run: pip install -r utils/requirements.txt
       shell: bash
 
     - name: Running Python script
-      run: python ${{ github.action_path }}/utils/updater.py
+      run: python utils/updater.py
       shell: bash
