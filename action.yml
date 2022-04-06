@@ -19,5 +19,5 @@ runs:
     - uses: actions/setup-python@v2
       with:
         python-version: '3.10'
-    - run: echo "${{ github.action_path }}" | ls -ltrha
+    - run: ls ${{ github.action_path }}
       shell: bash
