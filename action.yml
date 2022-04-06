@@ -25,13 +25,13 @@ runs:
       shell: bash
     
     - name: Install dependencies
-      run: pip install -r $GITHUB_PATH/utils/requirements.txt
+      run: pip install -r ${{ github.action_path }}/utils/requirements.txt
       shell: bash
 
     - name: Running the bash script
-      run: $GITHUB_PATH/helloworld.sh
+      run: ${{ github.action_path }}/helloworld.sh
       shell: bash
 
     - name: Running Python script
-      run: python $GITHUB_PATH/utils/updater.py
+      run: python ${{ github.action_path }}/utils/updater.py
       shell: bash
