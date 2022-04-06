@@ -10,7 +10,7 @@ def main():
 
     r = get(os.environ['ENDPOINT']).json()
 
-    with open('README.md', 'r') as original_file:
+    with open('/README.md', 'r') as original_file:
         content = original_file.read()
 
     for post in r:
@@ -18,7 +18,7 @@ def main():
             md_pattern.format(post['title'], post['lang'], post['slug'])
         )
 
-    with open('README.md', 'w') as f:
+    with open('/README.md', 'w') as f:
         f.write(
             re.sub(
                 r'(<!--POSTS:START-->\n).*?(\n<!--POSTS:END-->)',
