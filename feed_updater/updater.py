@@ -1,6 +1,9 @@
 import re
 from requests import get
 
+from .settings import MAIN
+from .patterns import POST_ITEM
+
 def main():
     content = ''
     list_of_posts = []
