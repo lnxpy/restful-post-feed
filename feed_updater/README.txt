@@ -1,0 +1,1 @@
+A Python function to call the RESTful API endpoint and retrieve posts. Once all posts retrived, the last count items will be assigned to the `README.md` post section. Also, the post section is specified with `<!--POSTS:NEW-->` and `<!--POSTS:END-->` commment line.

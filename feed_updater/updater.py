@@ -1,6 +1,4 @@
 import re
-import os
-
 from requests import get
 
 def main():
@@ -8,9 +6,9 @@ def main():
     list_of_posts = []
     md_pattern = '- [{}](https://alirezayahyapour.pythonanywhere.com/{}/{}/)'
 
-    r = get(os.environ['ENDPOINT']).json()
+    r = get('https://alirezayahyapour.pythonanywhere.com/api/v1/posts/').json()
 
-    with open('/README.md', 'r') as original_file:
+    with open('README.md', 'r') as original_file:
         content = original_file.read()
 
     for post in r:
@@ -18,7 +16,7 @@ def main():
             md_pattern.format(post['title'], post['lang'], post['slug'])
         )
 
-    with open('/README.md', 'w') as f:
+    with open('README.md', 'w') as f:
         f.write(
             re.sub(
                 r'(<!--POSTS:START-->\n).*?(\n<!--POSTS:END-->)',
