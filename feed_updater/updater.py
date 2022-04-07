@@ -1,25 +1,32 @@
 import re
 from requests import get
 
-from .settings import MAIN
-from .patterns import POST_ITEM
+from patterns.markdown import post_item
+from settings import config
+
+import json
+
 
 def main():
     content = ''
     list_of_posts = []
-    md_pattern = '- [{}](https://alirezayahyapour.pythonanywhere.com/{}/{}/)'
 
-    r = get('https://alirezayahyapour.pythonanywhere.com/api/v1/posts/').json()
+    #r = get(config['endpoint']).json()
+    with open('test.json', 'r') as f:
+        r = json.load(f)
 
-    with open('README.md', 'r') as original_file:
+    with open('../README.md', 'r') as original_file:
         content = original_file.read()
 
     for post in r:
         list_of_posts.append(
-            md_pattern.format(post['title'], post['lang'], post['slug'])
+            post_item.format(
+                    post[config['title']],
+                    'link' # --> post['lang'], post['slug']
+            )
         )
 
-    with open('README.md', 'w') as f:
+    with open('../README.md', 'w') as f:
         f.write(
             re.sub(
                 r'(<!--POSTS:START-->\n).*?(\n<!--POSTS:END-->)',
