@@ -2,4 +2,4 @@
 markdown patterns stored here
 '''
 
-POST_ITEM = '- [{}]({})'
+post_item = '- [{}]({})'
