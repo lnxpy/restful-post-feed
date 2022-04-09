@@ -45,7 +45,7 @@ config = {
 #### 4. CI Workflow
 Simply create the `<username>/.github/workflows/` directory and copy the original workflow.
 ```shell
-mkdir <username>/.github/workflows/ && cp restful-post-feed/workflows/post-section-updater.yml <username>/.github/workflows/
+mkdir -p <username>/.github/workflows/ && cp restful-post-feed/workflows/post-section-updater.yml <username>/.github/workflows/
 ```
 
 ### Example Repository
