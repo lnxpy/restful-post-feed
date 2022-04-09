@@ -18,7 +18,7 @@ git clone https://github.com/<username>/<username> && git clone https://github.c
 ```
 Then, copy the required directory as follows.
 ```shell
-cp restful-post-feed/feed_updater <username>
+cp -r restful-post-feed/feed_updater <username>
 ```
 
 #### 2. Add the recent posts section 
