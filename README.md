@@ -48,4 +48,7 @@ Simply create the `<username>/.github/workflows/` directory and copy the origina
 mkdir -p <username>/.github/workflows/ && cp restful-post-feed/workflows/post-section-updater.yml <username>/.github/workflows/
 ```
 
+You're done. Workflow will be trigger every 6 hours. You can change it from the `schedule` section in the yaml file.
+
 ### Example Repository
+[Here is an example repository that uses the same structure for updating the `Recent Posts` section of the readme file](https://github.com/lnxpy/test-feed). You can refer to that repository anytime.
