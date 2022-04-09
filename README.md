@@ -52,3 +52,5 @@ You're done. Workflow will be trigger every 6 hours. You can change it from the 
 
 ### Example Repository
 [Here is an example repository that uses the same structure for updating the `Recent Posts` section of the readme file](https://github.com/lnxpy/test-feed). You can refer to that repository anytime.
+
+[![Readme Card](https://github-readme-stats.vercel.app/api/pin/?username=lnxpy&repo=test-feed)](https://github.com/lnxpy/test-feed)
