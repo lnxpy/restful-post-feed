@@ -14,7 +14,7 @@ def main():
 
     response = get(config['endpoint']).json()
 
-    with open('../README.md', 'r') as original_file:
+    with open('README.md', 'r') as original_file:
         content = original_file.read()
 
     g = itemgetter(*config['url']['keys'])
@@ -27,7 +27,7 @@ def main():
             )
         )
 
-    with open('../README.md', 'w') as f:
+    with open('README.md', 'w') as f:
         f.write(
             re.sub(
                 r'(<!--POSTS:START-->\n).*?(<!--POSTS:END-->)',
