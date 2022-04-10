@@ -14,15 +14,15 @@ All you need is to clone this repository and copy the `feed_updater` directory r
 #### 1. Clone this repository
 Before you clone this repository, make sure you have your own reposotory already cloned locally.
 ```shell
-git clone https://github.com/<username>/<username> && git clone https://github.com/lnxpy/restful-post-feed
+git clone https://github.com/<yourusername>/<yourusername> && git clone https://github.com/lnxpy/restful-post-feed
 ```
 Then, copy the required directory as follows.
 ```shell
-cp -r restful-post-feed/feed_updater <username>
+cp -r restful-post-feed/feed_updater <yourusername>
 ```
 
 #### 2. Add the recent posts section 
-Once you get your repository ready, open up the `<username>/README.md` file in a text editor and add the following snippet somewhere in your readme file.
+Once you get your repository ready, open up the `<yourusername>/README.md` file in a text editor and add the following snippet somewhere in your readme file.
 ```html
 # My Recent Posts
 <!--POSTS:START-->
@@ -30,7 +30,7 @@ Once you get your repository ready, open up the `<username>/README.md` file in a
 ```
 
 #### 3. Configurations
-Open up the `<username>/feed_updater/settings.py` file for some basic configuration. Here is a simple hint for a correct configuration.
+Open up the `<yourusername>/feed_updater/settings.py` file for some basic configuration. Here is a simple hint for a correct configuration.
 ```python
 config = {
     'endpoint': '',     # --> the restful endpoint that responses the JSON data (your posts)
@@ -43,9 +43,9 @@ config = {
 ```
 
 #### 4. CI Workflow
-Simply create the `<username>/.github/workflows/` directory and copy the original workflow.
+Simply create the `<yourusername>/.github/workflows/` directory and copy the original workflow.
 ```shell
-mkdir -p <username>/.github/workflows/ && cp restful-post-feed/workflows/post-section-updater.yml <username>/.github/workflows/
+mkdir -p <yourusername>/.github/workflows/ && cp restful-post-feed/workflows/post-section-updater.yml <yourusername>/.github/workflows/
 ```
 
 You're done. Workflow will be trigger every 6 hours. You can change it from the `schedule` section in the yaml file.
