@@ -3,7 +3,7 @@ A workflow that updates your `Recent Posts` section of `README.md` listening to 
 
 This repository helps you in case of showing your weblog's recent posts on your profile README file so then users will be able to check your latest activities.
 
-### Prequirement
+### Prequirements
 - A RESTful endpoint that responses JSON data.
 - Profile readme for showing the result. (`username/username/README.md`)
 - Patience.
