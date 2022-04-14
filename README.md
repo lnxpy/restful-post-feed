@@ -1,5 +1,5 @@
 ## RESTful Post Feed
-A workflow that updates your `Recent Posts` section of `README.md` listening to a REST API endpoint other than a SOAP one with the help of GitHub Actions. (Like RSS feed updaters)
+A workflow that updates your `Recent Posts` section of README file listening to a REST API endpoint other than a SOAP one with the help of GitHub Actions. (Like RSS feed updaters)
 
 This repository helps you in case of showing your weblog's recent posts on your profile README file so then users will be able to check your latest activities.
 
