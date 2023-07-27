@@ -33,16 +33,9 @@ jobs:
       - name: Running Updater Script
         run: python feed_updater/updater.py
           
-      - name: Commit files
-        run: |
-          git add .
-          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git config --local user.name "github-actions[bot]"
-          if ! git diff-index --quiet HEAD; then
-            git commit -m "ACTION: post section updated"
-          fi
+      - name: Add files to staging area
+        run: git add .
+      - name: Commit changes
+        run: git commit -m "Added some changes"
       - name: Push changes
-        uses: ad-m/github-push-action@master
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          branch: ${{ github.ref }}
+        run: git push
