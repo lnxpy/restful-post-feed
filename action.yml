@@ -1,0 +1,70 @@
+name: 'RESTful Post Feed'
+description: 'Fetches your latest posts from a RESTful endpoint and updates the posts section of a Markdown file (like your profile README).'
+author: 'lnxpy'
+
+branding:
+  icon: 'refresh-cw'
+  color: 'blue'
+
+inputs:
+  endpoint:
+    description: 'The RESTful endpoint that responds the JSON data of your posts.'
+    required: true
+  title:
+    description: 'The title field name in the returned JSON objects.'
+    required: true
+  url_pattern:
+    description: 'A Python format pattern used to build each post URL.'
+    required: true
+  url_keys:
+    description: 'Comma-separated replacement field names for the URL pattern.'
+    required: false
+    default: 'url'
+  posts_count:
+    description: 'Maximum number of posts to render. Set to 0 to render all posts.'
+    required: false
+    default: '0'
+  file_path:
+    description: 'Path of the target file containing the markers.'
+    required: false
+    default: 'README.md'
+  start_marker:
+    description: 'The start HTML-comment marker of the posts section.'
+    required: false
+    default: '<!--POSTS:START-->'
+  end_marker:
+    description: 'The end HTML-comment marker of the posts section.'
+    required: false
+    default: '<!--POSTS:END-->'
+
+outputs:
+  updated:
+    description: 'Whether the target file has been changed.'
+  count:
+    description: 'Number of posts rendered into the section.'
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+
+    - name: Install dependencies
+      shell: bash
+      run: python -m pip install --upgrade requests
+
+    - name: Update the posts section
+      id: update
+      shell: bash
+      run: python "$GITHUB_ACTION_PATH/feed_action/main.py"
+      env:
+        INPUT_ENDPOINT: ${{ inputs.endpoint }}
+        INPUT_TITLE: ${{ inputs.title }}
+        INPUT_URL_PATTERN: ${{ inputs.url_pattern }}
+        INPUT_URL_KEYS: ${{ inputs.url_keys }}
+        INPUT_POSTS_COUNT: ${{ inputs.posts_count }}
+        INPUT_FILE_PATH: ${{ inputs.file_path }}
+        INPUT_START_MARKER: ${{ inputs.start_marker }}
+        INPUT_END_MARKER: ${{ inputs.end_marker }}

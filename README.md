@@ -1,54 +1,83 @@
 ## RESTful Post Feed
-A workflow that updates your `Recent Posts` section of README file listening to a REST API endpoint other than a SOAP one with the help of GitHub Actions. (Like RSS feed updaters)
+A GitHub Action that updates the `Recent Posts` section of your README file by listening to a RESTful API endpoint with the help of GitHub Actions. (Like RSS feed updaters)
 
 This repository helps you in case of showing your weblog's recent posts on your profile README file so then users will be able to check your latest activities.
 
-### Prequirements
-- A RESTful endpoint that responses JSON data.
+### Prerequisites
+- A RESTful endpoint that responds JSON data.
 - Profile readme for showing the result. (`username/username/README.md`)
 - Patience.
 
 ### Usage
-All you need is to clone this repository and copy the `feed_updater` directory right in the root path of your repository. Once you did that, you need to add the `Recent Posts` section for updates. Finally, you create the workflow.
+Add the `<!--POSTS:START-->` and `<!--POSTS:END-->` markers around your posts section and let the action take care of the rest. No files need to be copied into your repository anymore.
 
-#### 1. Clone this repository
-Before you clone this repository, make sure you have your own reposotory already cloned locally.
-```shell
-git clone https://github.com/<yourusername>/<yourusername> && git clone https://github.com/lnxpy/restful-post-feed
-```
-Then, copy the required directory as follows.
-```shell
-cp -r restful-post-feed/feed_updater <yourusername>
-```
-
-#### 2. Add the recent posts section 
-Once you get your repository ready, open up the `<yourusername>/README.md` file in a text editor and add the following snippet somewhere in your readme file.
+#### 1. Add the recent posts section
+Open up your `README.md` file in a text editor and add the following snippet somewhere in your readme file.
 ```html
 # My Recent Posts
 <!--POSTS:START-->
 <!--POSTS:END-->
 ```
 
-#### 3. Configurations
-Open up the `<yourusername>/feed_updater/settings.py` file for some basic configuration. Here is a simple hint for a correct configuration.
-```python
-config = {
-    'endpoint': '',     # --> the restful endpoint that responses the JSON data (your posts)
-    'title': '',        # --> the title field name in the returned JSON data
-    'url': {
-        'pattern': '',  # --> a python pattern to redirect users to the post index
-        'keys': [],     # --> replacement fields for the pattern
-    }
-}
+#### 2. Create the CI workflow
+Create the `.github/workflows/` directory in your repository and add a workflow file like the following one.
+```yml
+name: RESTful Post Feed Updater
+
+on:
+  schedule:
+    - cron: '0 */6 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  update-posts:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Updating the posts section
+        id: feed
+        uses: lnxpy/restful-post-feed@v1
+        with:
+          endpoint: 'https://api.example.com/posts'
+          title: 'title'
+          url_pattern: 'https://blog.example.com/post/{slug}'
+          url_keys: 'slug'
+          posts_count: '5'
+
+      - name: Commit files
+        if: steps.feed.outputs.updated == 'true'
+        run: |
+          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add .
+          if ! git diff-index --quiet HEAD; then
+            git commit -m "README updated"
+          fi
+          git push
 ```
 
-#### 4. CI Workflow
-Simply create the `<yourusername>/.github/workflows/` directory and copy the original workflow.
-```shell
-mkdir -p <yourusername>/.github/workflows/ && cp restful-post-feed/workflows/post-section-updater.yml <yourusername>/.github/workflows/
-```
+You're done. The workflow will be triggered every 6 hours. You can change it from the `schedule` section in the yaml file.
 
-You're done. Workflow will be trigger every 6 hours. You can change it from the `schedule` section in the yaml file.
+#### 3. Inputs
+| Input          | Required | Default              | Description                                                              |
+| :------------- | :------: | :------------------: | :----------------------------------------------------------------------- |
+| `endpoint`     | Yes      | -                    | The RESTful endpoint that responds the JSON data of your posts.          |
+| `title`        | Yes      | -                    | The title field name in the returned JSON objects.                       |
+| `url_pattern`  | Yes      | -                    | A Python format pattern used to build each post URL.                     |
+| `url_keys`     | No       | `url`                | Comma-separated replacement field names for the URL pattern.             |
+| `posts_count`  | No       | `0`                  | Maximum number of posts to render. Set to `0` to render all posts.       |
+| `file_path`    | No       | `README.md`          | Path of the target file containing the markers.                          |
+| `start_marker` | No       | `<!--POSTS:START-->` | The start HTML-comment marker of the posts section.                      |
+| `end_marker`   | No       | `<!--POSTS:END-->`   | The end HTML-comment marker of the posts section.                        |
+
+The action also exposes two step outputs: `updated` (`true`/`false`) and `count` (number of rendered posts).
+
+### Legacy Usage (copying the updater directory)
+The old way of copying the `feed_updater` directory into your repository, configuring `feed_updater/settings.py`, and running `feed_updater/updater.py` through the `workflows/post-section-updater.yml` workflow still works, but it is now deprecated in favor of the reusable action described above.
 
 ### Example Repository
 [Here is an example repository that uses the same structure for updating the `Recent Posts` section of the readme file](https://github.com/lnxpy/test-feed). You can refer to that repository anytime.
